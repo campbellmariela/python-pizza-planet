@@ -1,5 +1,6 @@
-from app.common.http_methods import GET, POST, PUT
 from flask import Blueprint, jsonify, request
+
+from app.common.http_methods import GET, POST, PUT
 
 from ..controllers import SizeController
 
@@ -28,6 +29,7 @@ def get_size_by_id(_id: int):
     response = size if not error else {'error': error}
     status_code = 200 if size else 404 if not error else 400
     return jsonify(response), status_code
+
 
 @size.route('/', methods=GET)
 def get_sizes():
