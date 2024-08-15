@@ -1,5 +1,6 @@
-from app.common.http_methods import GET, POST
 from flask import Blueprint, jsonify, request
+
+from app.common.http_methods import GET, POST
 
 from ..controllers import OrderController
 

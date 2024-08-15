@@ -1,5 +1,6 @@
-from app.common.http_methods import GET
 from flask import Blueprint, jsonify
+
+from app.common.http_methods import GET
 
 from ..controllers import IndexController
 
