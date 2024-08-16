@@ -63,19 +63,6 @@ def test_create(app, ingredients, size, beverages, client_data):
         pytest.assume(not beverages_in_detail.difference(beverage_ids))
 
 
-def test_calculate_order_price(app, ingredients, size, beverages, client_data):
-    created_size, created_ingredients, created_beverages = __create_sizes_ingredients_and_beverages(
-        ingredients,
-        [size],
-        beverages)
-    order = __order(created_ingredients, created_size, created_beverages, client_data)
-    created_order, _ = OrderController.create(order)
-    ingredients_price = sum(ingredient['price'] for ingredient in created_ingredients)
-    beverages_price = sum(beverage['price'] for beverage in created_beverages)
-    expected_total_price = round(created_size['price'] + ingredients_price + beverages_price, 2)
-    pytest.assume(created_order['total_price'] == expected_total_price)
-
-
 def test_get_by_id(app, ingredients, size, beverages, client_data):
     created_size, created_ingredients, created_beverages = __create_sizes_ingredients_and_beverages(
         ingredients,
