@@ -1,5 +1,7 @@
 import pytest
 
+from app.controllers.order.order_builder import OrderBuilder
+
 from ..utils.functions import (get_random_sequence, get_random_string,
                                shuffle_list)
 
@@ -15,7 +17,7 @@ def client_data_mock() -> dict:
 
 @pytest.fixture
 def order_uri():
-    return '/order'
+    return '/order/'
 
 
 @pytest.fixture
@@ -24,7 +26,29 @@ def client_data():
 
 
 @pytest.fixture
-def order(create_ingredients, create_size, client_data, create_beverages) -> dict:
+def mock_order_builder(create_size, create_ingredients, create_beverages):
+    size = create_size.json
+    ingredients = create_ingredients
+    beverages = create_beverages
+
+    size_id = size['_id']
+    ingredient_ids = [ingredient['_id'] for ingredient in ingredients]
+    beverage_ids = [beverage['_id'] for beverage in beverages]
+
+    order_builder = OrderBuilder()
+    order_builder.set_size(size_id)
+    order_builder.add_ingredients(ingredient_ids)
+    order_builder.add_beverages(beverage_ids)
+    return {
+        'order_builder': order_builder,
+        'size': size,
+        'ingredients': ingredients,
+        'beverages': beverages
+    }
+
+
+@pytest.fixture
+def order(create_ingredients, create_size, create_beverages, client_data) -> dict:
     ingredients = [ingredient.get('_id') for ingredient in create_ingredients]
     size_id = create_size.get('_id')
     beverages = [beverage.get('_id') for beverage in create_beverages]

@@ -11,7 +11,7 @@ run-tests:
 	python3 manage.py test
 
 run-coverage:
-	python3 -m pytest -v --cov=app/test --cov-report=term-missing
+	python3 -m pytest -v --cov=app --cov-report=term-missing
 
 run-formater:
 	autopep8 --max-line-length 110 --experimental -i -r app/
