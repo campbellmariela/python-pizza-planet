@@ -14,11 +14,11 @@ class OrderBuilderInterface():
     @abstractmethod
     def add_beverages(self, beverage_ids: list):
         pass
-    
+
     @abstractmethod
     def calculate_total_price(self):
         pass
-    
+
     @abstractmethod
     def build(self):
         pass

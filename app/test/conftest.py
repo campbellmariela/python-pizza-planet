@@ -12,6 +12,7 @@ from app.repositories.models import (Beverage, Ingredient, Order, OrderDetail,
 from .fixtures.beverage import *
 from .fixtures.ingredient import *
 from .fixtures.order import *
+from .fixtures.report import *
 from .fixtures.size import *
 
 
