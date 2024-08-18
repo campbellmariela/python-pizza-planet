@@ -63,6 +63,11 @@ def test_create(app, ingredients, size, beverages, client_data):
         pytest.assume(not beverages_in_detail.difference(beverage_ids))
 
 
+def test_create_with_invalid_payload(app, client_data):
+    order, error = OrderController.create(client_data)
+    pytest.assume(order == "Invalid order payload")
+
+
 def test_get_by_id(app, ingredients, size, beverages, client_data):
     created_size, created_ingredients, created_beverages = __create_sizes_ingredients_and_beverages(
         ingredients,

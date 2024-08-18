@@ -2,8 +2,8 @@ import pytest
 
 from app.controllers.order.order_builder import OrderBuilder
 
-from ..utils.functions import (get_random_sequence, get_random_string,
-                               shuffle_list)
+from ..utils.functions import (get_random_phone, get_random_sequence,
+                               get_random_string, shuffle_list)
 
 
 def client_data_mock() -> dict:
@@ -11,7 +11,7 @@ def client_data_mock() -> dict:
         'client_address': get_random_string(),
         'client_dni': get_random_sequence(),
         'client_name': get_random_string(),
-        'client_phone': get_random_sequence()
+        'client_phone': get_random_phone()
     }
 
 
@@ -48,16 +48,17 @@ def mock_order_builder(create_size, create_ingredients, create_beverages):
 
 
 @pytest.fixture
-def order(create_ingredients, create_size, create_beverages, client_data) -> dict:
+def create_order(client, order_uri, create_ingredients, create_size, create_beverages) -> dict:
     ingredients = [ingredient.get('_id') for ingredient in create_ingredients]
-    size_id = create_size.get('_id')
+    size_id = create_size.json.get('_id')
     beverages = [beverage.get('_id') for beverage in create_beverages]
-    return {
+    order = client.post(order_uri, json={
         **client_data_mock(),
         'ingredients': ingredients,
         'size_id': size_id,
         'beverages': beverages
-    }
+    })
+    return order
 
 
 @pytest.fixture
