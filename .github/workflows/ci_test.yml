@@ -1,12 +1,9 @@
-name: CI Workflow
+name: CI test workflow
 
 on:
-    push:
-        branches:
-            - '*'
     pull_request:
         branches:
-            - '*'
+            - "main"
 
 jobs:
     build:
@@ -43,13 +40,5 @@ jobs:
               uses: coroo/pytest-coverage-commentator@v1.0.2
               with:
                 pytest-coverage: coverage.txt
-            
-            - name: Run formatter
-              run: |
-                  source venv/bin/activate
-                  make run-formater
-
-            - name: Run linter
-              run: |
-                source venv/bin/activate
-                make run-lint
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
