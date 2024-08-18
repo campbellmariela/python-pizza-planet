@@ -1,5 +1,6 @@
 from typing import Any, List, Optional, Sequence
 
+from sqlalchemy import desc, func
 from sqlalchemy.sql import column, text
 
 from .models import Beverage, Ingredient, Order, OrderDetail, Size, db
@@ -82,6 +83,46 @@ class OrderManager(BaseManager):
     @classmethod
     def update(cls):
         raise NotImplementedError(f'Method not suported for {cls.__name__}')
+
+
+class ReportManager(BaseManager):
+    @classmethod
+    def get_most_requested_ingredient(cls):
+        most_requested_ingredient = (
+            cls.session.query(
+                Ingredient.name,
+                func.count(OrderDetail.ingredient_id).label('total_orders'))
+            .join(OrderDetail, Ingredient._id == OrderDetail.ingredient_id)
+            .group_by(Ingredient._id)
+            .order_by(desc('total_orders'))
+            .first()
+        )
+        return most_requested_ingredient
+
+    @classmethod
+    def get_month_with_most_revenue(cls):
+        month_with_most_revenue = (
+            cls.session.query(
+                func.extract('month', Order.date).label('month'),
+                func.sum(Order.total_price).label('revenue'))
+            .group_by('month')
+            .order_by(desc('revenue'))
+            .first()
+        )
+        return month_with_most_revenue
+
+    @classmethod
+    def get_top_customers(cls):
+        top_customers = (
+            cls.session.query(
+                Order.client_name,
+                func.count(Order.client_name).label('total_orders'))
+            .group_by(Order.client_name)
+            .order_by(desc('total_orders'))
+            .limit(3)
+            .all()
+        )
+        return top_customers
 
 
 class IndexManager(BaseManager):

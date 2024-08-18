@@ -4,6 +4,9 @@ create-venv:
 install:
 	pip3 install -r requirements.txt
 
+populate:
+	python manage.py populate_db
+
 start-app:
 	FLASK_ENV=development python3 manage.py run
 
