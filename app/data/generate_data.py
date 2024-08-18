@@ -36,7 +36,7 @@ def generate_beverages():
 
 
 def generate_orders(sizes, ingredients, beverages):
-    customers = [generate_client_data() for _ in range(20)]
+    customers = [generate_client_data() for _ in range(15)]
     orders = []
     for _ in range(100):
         customer = random.choice(customers)
