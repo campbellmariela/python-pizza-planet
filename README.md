@@ -34,6 +34,10 @@ git clone https://github.com/ioet/python-pizza-planet.git
 ```bash
 python3 -m venv venv
 ```
+or
+```bash
+make create-venv
+```
 
 - Activate the virtual environment (In vscode if you select the virtual env for your project it will activate once you open a new console window)
 
@@ -53,6 +57,10 @@ _For windows users:_
 
 ```bash
 pip3 install -r requirements.txt
+```
+or
+```bash
+make install
 ```
 
 - Start the database (Only needed for the first run):
@@ -82,6 +90,11 @@ set FLASK_ENV=development
 ```bash
 python3 manage.py run
 ```
+or
+```bash
+
+make start-app
+```
 
 ## Running the frontend
 
@@ -103,7 +116,13 @@ ext install ritwickdey.LiveServer
 
 - **To avoid CORS errors** start the backend before the frontend, some browsers have CORS issues otherwise
 
-### Testing the backend
+## Populate database
+
+```bash
+make populate
+```
+
+## Testing the backend
 
 - Make sure that you have `pytest` installed
 
@@ -112,3 +131,24 @@ ext install ritwickdey.LiveServer
 ```bash
 python3 manage.py test
 ```
+or 
+```bash
+make run-tests
+```
+
+- Run test with coverage (the output will be saved in coverage.txt):
+```bash
+make run-coverage
+```
+
+## Formating and running linters backend 
+
+```bash
+make run-formater
+```
+```bash
+make run-lint
+```
+
+## Plan to deploy app
+![plan to deploy the app](/utils/plan-to-deploy-app.png)
